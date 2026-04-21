@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Fragment } from "react";
 
 const content = {
   he: {
@@ -23,6 +23,13 @@ const content = {
     submit: "שלחי את הסקר ✨",
     ty_title: "תודה רבה! 🎉",
     ty_msg: "התשובות שלך עוזרות לי לבנות סדנה שבאמת מתאימה לנשים כמוך. אדאג לעדכן אותך כשהסדנה תצא!",
+    tools: {
+      label: "שאלה נוספת",
+      text: "באילו כלים את משתמשת באופן קבוע?",
+      options: ["ChatGPT", "Gemini", "Claude", "Copilot"],
+      otherOption: "אחר (כתבי בעצמך)",
+      otherPlaceholder: "ספרי לי איזה כלי..."
+    },
     questions: [
       { id: "name", label: "שאלה 1", type: "text", text: "איך קוראים לך?", placeholder: "השם שלך...", required: true },
       { id: "who", label: "שאלה 2", type: "radio", text: "מי את?", options: ["אמא בבית (Stay-at-home mom)", "עצמאית / פרילנסרית", "שכירה", "אחר"] },
@@ -57,6 +64,13 @@ const content = {
     submit: "Submit Survey ✨",
     ty_title: "Thank you! 🎉",
     ty_msg: "Your answers help me build a workshop that truly works for women like you. I'll update you when the workshop launches!",
+    tools: {
+      label: "Follow-up",
+      text: "Which AI tools do you use regularly?",
+      options: ["ChatGPT", "Gemini", "Claude", "Copilot"],
+      otherOption: "Other (tell me)",
+      otherPlaceholder: "Tell me which tool..."
+    },
     questions: [
       { id: "name", label: "Question 1", type: "text", text: "What's your name?", placeholder: "Your name...", required: true },
       { id: "who", label: "Question 2", type: "radio", text: "Which best describes you?", options: ["Stay-at-home mom", "Freelancer / self-employed", "Employed outside the home", "Other"] },
@@ -84,6 +98,7 @@ export default function Survey() {
 
   const c = content[lang];
   const total = c.questions.length;
+  const showTools = answers.familiarity === "משתמשת באופן קבוע" || answers.familiarity === "Use regularly";
 
   const answered = c.questions.filter(q => {
     if (q.type === "text") return false;
@@ -140,6 +155,17 @@ export default function Survey() {
         }
       });
 
+      // Handle tools "other" option
+      if (Array.isArray(payload.tools) && (payload.tools as string[]).includes(c.tools.otherOption)) {
+        const otherText = payload.tools_other as string;
+        if (otherText) {
+          payload.tools = (payload.tools as string[]).map(v =>
+            v === c.tools.otherOption ? `${c.tools.otherOption}: ${otherText}` : v
+          );
+        }
+        delete payload.tools_other;
+      }
+
       await fetch(WEBHOOK_URL, {
         method: "POST",
         mode: "no-cors",
@@ -166,6 +192,14 @@ export default function Survey() {
   }
 
   return (
+    <>
+    <style>{`
+      @keyframes fadeSlideIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      .tools-followup { animation: fadeSlideIn 0.3s ease forwards; }
+    `}</style>
     <div style={{ direction: c.dir as "ltr" | "rtl", minHeight: "100vh", background: "#FAFAF8", fontFamily: "Segoe UI, Arial, sans-serif", color: "#1E1B2E", padding: "24px 16px 60px" }}>
       <div style={{ maxWidth: 580, margin: "0 auto" }}>
 
@@ -261,7 +295,8 @@ export default function Survey() {
         </div>
 
         {c.questions.map((q) => (
-          <div key={q.id} style={{ background: "#fff", borderRadius: 16, padding: "24px 20px", marginBottom: 16, border: "1px solid #E8E5F0", boxShadow: "0 2px 10px rgba(0,0,0,0.04)" }}>
+          <Fragment key={q.id}>
+          <div style={{ background: "#fff", borderRadius: 16, padding: "24px 20px", marginBottom: 16, border: "1px solid #E8E5F0", boxShadow: "0 2px 10px rgba(0,0,0,0.04)" }}>
             <div style={{ fontSize: 12, fontWeight: 700, color: "#E8637A", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 6 }}>{q.label}</div>
             <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 16, lineHeight: 1.4 }}>{q.text}</div>
 
@@ -407,6 +442,75 @@ export default function Survey() {
               )
             )}
           </div>
+
+          {q.id === "familiarity" && showTools && (
+            <div className="tools-followup" style={{ background: "#fff", borderRadius: 16, padding: "24px 20px", marginBottom: 16, border: "2px solid #7C5CBF", boxShadow: "0 2px 10px rgba(124,92,191,0.1)" }}>
+              <div style={{ fontSize: 12, fontWeight: 700, color: "#7C5CBF", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 6 }}>{c.tools.label}</div>
+              <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 16, lineHeight: 1.4 }}>{c.tools.text}</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                {c.tools.options.map(opt => {
+                  const sel = (answers.tools as string[] || []).includes(opt);
+                  return (
+                    <div key={opt} onClick={() => handleCheckbox("tools", opt)} style={{
+                      display: "flex", alignItems: "center", gap: 12,
+                      padding: "12px 16px", borderRadius: 12, cursor: "pointer",
+                      border: `2px solid ${sel ? "#7C5CBF" : "#E8E5F0"}`,
+                      background: sel ? "#EDE8F8" : "#FAFAF8",
+                      transition: "all 0.15s"
+                    }}>
+                      <div style={{
+                        width: 18, height: 18, borderRadius: 4, border: `2px solid ${sel ? "#7C5CBF" : "#ccc"}`,
+                        background: sel ? "#7C5CBF" : "#fff", flexShrink: 0,
+                        display: "flex", alignItems: "center", justifyContent: "center"
+                      }}>
+                        {sel && <span style={{ color: "#fff", fontSize: 11, fontWeight: 700 }}>✓</span>}
+                      </div>
+                      <span style={{ fontSize: 14, lineHeight: 1.4 }}>{opt}</span>
+                    </div>
+                  );
+                })}
+                {(() => {
+                  const sel = (answers.tools as string[] || []).includes(c.tools.otherOption);
+                  return (
+                    <>
+                      <div onClick={() => handleCheckbox("tools", c.tools.otherOption)} style={{
+                        display: "flex", alignItems: "center", gap: 12,
+                        padding: "12px 16px", borderRadius: 12, cursor: "pointer",
+                        border: `2px solid ${sel ? "#7C5CBF" : "#E8E5F0"}`,
+                        background: sel ? "#EDE8F8" : "#FAFAF8",
+                        transition: "all 0.15s"
+                      }}>
+                        <div style={{
+                          width: 18, height: 18, borderRadius: 4, border: `2px solid ${sel ? "#7C5CBF" : "#ccc"}`,
+                          background: sel ? "#7C5CBF" : "#fff", flexShrink: 0,
+                          display: "flex", alignItems: "center", justifyContent: "center"
+                        }}>
+                          {sel && <span style={{ color: "#fff", fontSize: 11, fontWeight: 700 }}>✓</span>}
+                        </div>
+                        <span style={{ fontSize: 14, lineHeight: 1.4 }}>{c.tools.otherOption}</span>
+                      </div>
+                      {sel && (
+                        <input
+                          type="text"
+                          value={(answers.tools_other as string) || ""}
+                          onChange={e => handleText("tools_other", e.target.value)}
+                          placeholder={c.tools.otherPlaceholder}
+                          autoFocus
+                          style={{
+                            width: "100%", padding: "12px 14px", borderRadius: 12, fontSize: 14,
+                            border: "2px solid #7C5CBF", background: "#fff",
+                            fontFamily: "inherit", direction: c.dir as "ltr" | "rtl", outline: "none", color: "#1E1B2E"
+                          }}
+                        />
+                      )}
+                    </>
+                  );
+                })()}
+              </div>
+            </div>
+          )}
+
+          </Fragment>
         ))}
 
         {submitError && (
@@ -437,5 +541,6 @@ export default function Survey() {
 
       </div>
     </div>
+    </>
   );
 }
