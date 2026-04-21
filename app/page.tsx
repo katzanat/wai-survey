@@ -5,7 +5,7 @@ import { useState, Fragment } from "react";
 const content = {
   he: {
     dir: "rtl",
-    title: "AI לנשים — עוזרת לי להבין מה אתן צריכות!",
+    title: "סדנת AI לנשים",
     desc: "אני בונה סדנת AI לנשים - פרקטית, בעברית, ללא צורך בידע טכני. אני אשמח אם תוכלי לענות לי על כמה שאלות זה יעזור לי לבנות משהו שבאמת מועיל",
     time: "⏱ 3 דקות בלבד",
     about_title: "זה מרגיש לך מוכר? 💭",
@@ -46,7 +46,7 @@ const content = {
   },
   en: {
     dir: "ltr",
-    title: "AI for Women — Help Me Build the Right Workshop!",
+    title: "AI Workshop for Women",
     desc: "I'm building a practical AI workshop for women — no technical background needed. 3 minutes of your time will help me build something truly useful ✨",
     time: "⏱ Only 3 minutes",
     about_title: "Does this sound like you? 💭",
