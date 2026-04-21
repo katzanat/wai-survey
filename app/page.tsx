@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 const content = {
@@ -18,68 +20,21 @@ const content = {
     ],
     about_outro: "זה בדיוק מה שהסדנה באה לפתור — AI פרקטי, בעברית, בקצב שלך, במרחב בטוח של נשים.",
     aspiration: "✨ אני רוצה להיות הגרסה הטובה ביותר של עצמי — לעשות יותר, בפחות זמן.",
-    closing: "אנחנו לומדות כלים פרקטיים כדי לפתח את היצירתיות והדימיון שלנו. בואי נשבור את תקרת הזכוכית. 💪",
     submit: "שלחי את הסקר ✨",
     ty_title: "תודה רבה! 🎉",
     ty_msg: "התשובות שלך עוזרות לי לבנות סדנה שבאמת מתאימה לנשים כמוך. אדאג לעדכן אותך כשהסדנה תצא!",
     questions: [
-      {
-        id: "name", label: "שאלה 1", type: "text",
-        text: "איך קוראים לך?",
-        placeholder: "השם שלך...",
-        required: true
-      },
-      {
-        id: "who", label: "שאלה 2", type: "radio",
-        text: "מי את?",
-        options: ["אמא בבית (Stay-at-home mom)", "עצמאית / פרילנסרית", "שכירה", "אחר"]
-      },
-      {
-        id: "age", label: "שאלה 3", type: "radio",
-        text: "בת כמה את?",
-        options: ["25–34", "35–44", "45–54", "55+"]
-      },
-      {
-        id: "familiarity", label: "שאלה 4", type: "radio",
-        text: "כמה את מכירה כלי AI כמו ChatGPT?",
-        options: ["מעולם לא השתמשתי", "ניסיתי פעם-פעמיים אבל לא הבנתי", "משתמשת לפעמים, לא בטוחה שנכון", "משתמשת באופן קבוע"]
-      },
-      {
-        id: "pain", label: "שאלה 5", type: "checkbox",
-        text: "מה הכי מעצבן אותך ביומיום? (אפשר כמה)",
-        options: ["אין לי מספיק זמן לעצמי", "יותר מדי ניירת — מכתבים, טפסים", "כתיבת תוכן / פוסטים לוקחת המון זמן", "תכנון (ארוחות, לוח זמנים, חופשות)", "קשה לי לחזור לעבודה / לפתח קריירה", "קשה למצוא מידע מהיר ואמין"]
-      },
-      {
-        id: "topics", label: "שאלה 6", type: "checkbox",
-        text: "אילו נושאים היית רוצה ללמוד? (אפשר כמה)",
-        options: ["מה זה AI ואיך זה עובד", "איך לשאול AI נכון (פרומפטינג)", "AI לחיי יומיום (תכנון, בית ספר)", "AI לקריירה (CV, ראיון, כתיבה)", "יצירת תוכן (סושיאל, מצגות)", "AI לעסק קטן / פרילנס"],
-        otherOption: "אחר (כתבי בעצמך)"
-      },
-      {
-        id: "format", label: "שאלה 7", type: "radio",
-        text: "מה הפורמט שהכי נוח לך?",
-        options: ["מפגשים פנים אל פנים", "מפגשים חיים אונליין (Zoom)", "סרטונים מוקלטים — מתי שנוח לי", "שילוב — מפגשים חיים + סרטונים", "קבוצת WhatsApp עם למידה שוטפת"]
-      },
-      {
-        id: "timing", label: "שאלה 8", type: "checkbox",
-        text: "מתי נוח לך ללמוד?",
-        options: ["בוקר (9–12)", "אחה״צ (12–16)", "ערב (20–22)", "סוף שבוע"]
-      },
-      {
-        id: "price", label: "שאלה 9", type: "radio",
-        text: "כמה תהיי מוכנה לשלם על סדנה של 6 מפגשים?",
-        options: ["עד $100", "$100–$150", "$150–$200", "יותר מ-$200 אם שווה את זה"]
-      },
-      {
-        id: "likely", label: "שאלה 10", type: "scale",
-        text: "כמה סביר שתצטרפי לסדנה כזו?",
-        low: "ממש לא סביר", high: "בטוח שכן!"
-      },
-      {
-        id: "open", label: "שאלה 11", type: "text",
-        text: "יש משהו שחשוב לך שאדע? (רשות)",
-        placeholder: "כתבי כאן..."
-      }
+      { id: "name", label: "שאלה 1", type: "text", text: "איך קוראים לך?", placeholder: "השם שלך...", required: true },
+      { id: "who", label: "שאלה 2", type: "radio", text: "מי את?", options: ["אמא בבית (Stay-at-home mom)", "עצמאית / פרילנסרית", "שכירה", "אחר"] },
+      { id: "age", label: "שאלה 3", type: "radio", text: "בת כמה את?", options: ["25–34", "35–44", "45–54", "55+"] },
+      { id: "familiarity", label: "שאלה 4", type: "radio", text: "כמה את מכירה כלי AI כמו ChatGPT?", options: ["מעולם לא השתמשתי", "ניסיתי פעם-פעמיים אבל לא הבנתי", "משתמשת לפעמים, לא בטוחה שנכון", "משתמשת באופן קבוע"] },
+      { id: "pain", label: "שאלה 5", type: "checkbox", text: "מה הכי מעצבן אותך ביומיום? (אפשר כמה)", options: ["אין לי מספיק זמן לעצמי", "יותר מדי ניירת — מכתבים, טפסים", "כתיבת תוכן / פוסטים לוקחת המון זמן", "תכנון (ארוחות, לוח זמנים, חופשות)", "קשה לי לחזור לעבודה / לפתח קריירה", "קשה למצוא מידע מהיר ואמין"] },
+      { id: "topics", label: "שאלה 6", type: "checkbox", text: "אילו נושאים היית רוצה ללמוד? (אפשר כמה)", options: ["מה זה AI ואיך זה עובד", "איך לשאול AI נכון (פרומפטינג)", "AI לחיי יומיום (תכנון, בית ספר)", "AI לקריירה (CV, ראיון, כתיבה)", "יצירת תוכן (סושיאל, מצגות)", "AI לעסק קטן / פרילנס"], otherOption: "אחר (כתבי בעצמך)" },
+      { id: "format", label: "שאלה 7", type: "radio", text: "מה הפורמט שהכי נוח לך?", options: ["מפגשים פנים אל פנים", "מפגשים חיים אונליין (Zoom)", "סרטונים מוקלטים — מתי שנוח לי", "שילוב — מפגשים חיים + סרטונים", "קבוצת WhatsApp עם למידה שוטפת"] },
+      { id: "timing", label: "שאלה 8", type: "checkbox", text: "מתי נוח לך ללמוד?", options: ["בוקר (9–12)", "אחה״צ (12–16)", "ערב (20–22)", "סוף שבוע"] },
+      { id: "price", label: "שאלה 9", type: "radio", text: "כמה תהיי מוכנה לשלם על סדנה של 6 מפגשים?", options: ["עד $100", "$100–$150", "$150–$200", "יותר מ-$200 אם שווה את זה"] },
+      { id: "likely", label: "שאלה 10", type: "scale", text: "כמה סביר שתצטרפי לסדנה כזו?", low: "ממש לא סביר", high: "בטוח שכן!" },
+      { id: "open", label: "שאלה 11", type: "text", text: "יש משהו שחשוב לך שאדע? (רשות)", placeholder: "כתבי כאן..." }
     ]
   },
   en: {
@@ -99,68 +54,21 @@ const content = {
     ],
     about_outro: "This is exactly what the workshop is built to solve — practical AI, in your language, at your pace, in a safe space of women.",
     aspiration: "✨ I want to be the best version of myself — getting more done, in less time.",
-    closing: "We learn practical tools to unlock our creativity and imagination. Let's break the glass ceiling together. 💪",
     submit: "Submit Survey ✨",
     ty_title: "Thank you! 🎉",
     ty_msg: "Your answers help me build a workshop that truly works for women like you. I'll update you when the workshop launches!",
     questions: [
-      {
-        id: "name", label: "Question 1", type: "text",
-        text: "What's your name?",
-        placeholder: "Your name...",
-        required: true
-      },
-      {
-        id: "who", label: "Question 2", type: "radio",
-        text: "Which best describes you?",
-        options: ["Stay-at-home mom", "Freelancer / self-employed", "Employed outside the home", "Other"]
-      },
-      {
-        id: "age", label: "Question 3", type: "radio",
-        text: "How old are you?",
-        options: ["25–34", "35–44", "45–54", "55+"]
-      },
-      {
-        id: "familiarity", label: "Question 4", type: "radio",
-        text: "How familiar are you with AI tools like ChatGPT?",
-        options: ["Never used them", "Tried once or twice but didn't get it", "Use sometimes, not sure I'm doing it right", "Use regularly"]
-      },
-      {
-        id: "pain", label: "Question 5", type: "checkbox",
-        text: "What frustrates you most daily? (select all that apply)",
-        options: ["Not enough time for myself", "Too much admin — letters, forms, paperwork", "Writing content/posts takes too long", "Planning (meals, schedules, vacations)", "Hard to get back to work / develop career", "Hard to find quick, reliable info"]
-      },
-      {
-        id: "topics", label: "Question 6", type: "checkbox",
-        text: "Which topics would you like to learn? (select all that apply)",
-        options: ["What AI is and how it works", "How to prompt AI effectively", "AI for daily life (planning, school)", "AI for career (resume, interviews)", "Content creation (social, presentations)", "AI for small business / freelancing"],
-        otherOption: "Other (tell me)"
-      },
-      {
-        id: "format", label: "Question 7", type: "radio",
-        text: "What's your preferred format?",
-        options: ["In-person meetings", "Live online sessions (Zoom)", "Recorded videos — watch anytime", "Hybrid — live + recordings", "WhatsApp group with ongoing learning"]
-      },
-      {
-        id: "timing", label: "Question 8", type: "checkbox",
-        text: "When is it most convenient to learn?",
-        options: ["Morning (9am–12pm)", "Afternoon (12–4pm)", "Evening (8–10pm)", "Weekend"]
-      },
-      {
-        id: "price", label: "Question 9", type: "radio",
-        text: "How much would you pay for a 6-session course?",
-        options: ["Under $100", "$100–$150", "$150–$200", "More than $200 if worth it"]
-      },
-      {
-        id: "likely", label: "Question 10", type: "scale",
-        text: "How likely are you to join such a course?",
-        low: "Not likely at all", high: "Definitely yes!"
-      },
-      {
-        id: "open", label: "Question 11", type: "text",
-        text: "Anything else you want me to know? (optional)",
-        placeholder: "Write here..."
-      }
+      { id: "name", label: "Question 1", type: "text", text: "What's your name?", placeholder: "Your name...", required: true },
+      { id: "who", label: "Question 2", type: "radio", text: "Which best describes you?", options: ["Stay-at-home mom", "Freelancer / self-employed", "Employed outside the home", "Other"] },
+      { id: "age", label: "Question 3", type: "radio", text: "How old are you?", options: ["25–34", "35–44", "45–54", "55+"] },
+      { id: "familiarity", label: "Question 4", type: "radio", text: "How familiar are you with AI tools like ChatGPT?", options: ["Never used them", "Tried once or twice but didn't get it", "Use sometimes, not sure I'm doing it right", "Use regularly"] },
+      { id: "pain", label: "Question 5", type: "checkbox", text: "What frustrates you most daily? (select all that apply)", options: ["Not enough time for myself", "Too much admin — letters, forms, paperwork", "Writing content/posts takes too long", "Planning (meals, schedules, vacations)", "Hard to get back to work / develop career", "Hard to find quick, reliable info"] },
+      { id: "topics", label: "Question 6", type: "checkbox", text: "Which topics would you like to learn? (select all that apply)", options: ["What AI is and how it works", "How to prompt AI effectively", "AI for daily life (planning, school)", "AI for career (resume, interviews)", "Content creation (social, presentations)", "AI for small business / freelancing"], otherOption: "Other (tell me)" },
+      { id: "format", label: "Question 7", type: "radio", text: "What's your preferred format?", options: ["In-person meetings", "Live online sessions (Zoom)", "Recorded videos — watch anytime", "Hybrid — live + recordings", "WhatsApp group with ongoing learning"] },
+      { id: "timing", label: "Question 8", type: "checkbox", text: "When is it most convenient to learn?", options: ["Morning (9am–12pm)", "Afternoon (12–4pm)", "Evening (8–10pm)", "Weekend"] },
+      { id: "price", label: "Question 9", type: "radio", text: "How much would you pay for a 6-session workshop?", options: ["Under $100", "$100–$150", "$150–$200", "More than $200 if worth it"] },
+      { id: "likely", label: "Question 10", type: "scale", text: "How likely are you to join such a workshop?", low: "Not likely at all", high: "Definitely yes!" },
+      { id: "open", label: "Question 11", type: "text", text: "Anything else you want me to know? (optional)", placeholder: "Write here..." }
     ]
   }
 };
@@ -194,10 +102,7 @@ export default function Survey() {
   function handleCheckbox(id, val) {
     setAnswers(prev => {
       const cur = prev[id] || [];
-      return {
-        ...prev,
-        [id]: cur.includes(val) ? cur.filter(v => v !== val) : [...cur, val]
-      };
+      return { ...prev, [id]: cur.includes(val) ? cur.filter(v => v !== val) : [...cur, val] };
     });
   }
 
@@ -213,7 +118,6 @@ export default function Survey() {
     if (submitting) return;
     setSubmitError(null);
 
-    // Basic validation: require name
     if (!answers.name || !answers.name.trim()) {
       setSubmitError(lang === "he" ? "אנא מלאי את שמך 😊" : "Please enter your name 😊");
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -222,7 +126,6 @@ export default function Survey() {
 
     setSubmitting(true);
     try {
-      // Merge "other" free-text responses into their parent fields
       const payload = { ...answers, lang };
       c.questions.forEach(q => {
         if (q.otherOption && Array.isArray(payload[q.id])) {
@@ -265,7 +168,6 @@ export default function Survey() {
     <div style={{ direction: c.dir, minHeight: "100vh", background: "#FAFAF8", fontFamily: "Segoe UI, Arial, sans-serif", color: "#1E1B2E", padding: "24px 16px 60px" }}>
       <div style={{ maxWidth: 580, margin: "0 auto" }}>
 
-        {/* Lang toggle */}
         <div style={{ display: "flex", justifyContent: "center", gap: 8, marginBottom: 28 }}>
           {["he", "en"].map(l => (
             <button key={l} onClick={() => setLang(l)} style={{
@@ -280,7 +182,6 @@ export default function Survey() {
           ))}
         </div>
 
-        {/* Header */}
         <div style={{ textAlign: "center", marginBottom: 24 }}>
           <div
             onClick={e => {
@@ -316,7 +217,6 @@ export default function Survey() {
           <span style={{ display: "inline-block", background: "#EDE8F8", color: "#7C5CBF", fontSize: 13, fontWeight: 600, padding: "4px 14px", borderRadius: 20 }}>{c.time}</span>
         </div>
 
-        {/* Pain points */}
         <div style={{ background: "linear-gradient(135deg,#FDE8EC 0%,#EDE8F8 100%)", borderRadius: 18, padding: "24px 20px", marginBottom: 28, border: "1px solid #F2DDE3" }}>
           <h2 style={{ fontSize: 18, fontWeight: 700, marginBottom: 6, color: "#1E1B2E" }}>{c.about_title}</h2>
           <p style={{ fontSize: 14, color: "#6B6880", marginBottom: 16, lineHeight: 1.5 }}>{c.about_intro}</p>
@@ -331,28 +231,24 @@ export default function Survey() {
           <p style={{ fontSize: 14, color: "#1E1B2E", lineHeight: 1.6, fontWeight: 500, margin: 0, paddingTop: 4 }}>{c.about_outro}</p>
         </div>
 
-        {/* Aspiration */}
         <div style={{
           background: "#fff", borderRadius: 16, padding: "20px 22px", marginBottom: 28,
           border: "2px solid #E8637A", position: "relative",
           boxShadow: "0 4px 20px rgba(232,99,122,0.12)"
         }}>
           <div style={{
-            position: "absolute", top: -10, [c.dir === "rtl" ? "right" : "left"]: 20,
+            position: "absolute", top: -10,
+            [c.dir === "rtl" ? "right" : "left"]: 20,
             background: "#fff", padding: "0 10px",
             color: "#E8637A", fontSize: 11, fontWeight: 700, letterSpacing: 1
           }}>
             {lang === "he" ? "החזון" : "THE VISION"}
           </div>
-          <p style={{
-            fontSize: 16, lineHeight: 1.6, fontWeight: 600, margin: 0,
-            color: "#1E1B2E", textAlign: "center"
-          }}>
+          <p style={{ fontSize: 16, lineHeight: 1.6, fontWeight: 600, margin: 0, color: "#1E1B2E", textAlign: "center" }}>
             {c.aspiration}
           </p>
         </div>
 
-        {/* Progress */}
         <div style={{ marginBottom: 28 }}>
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: "#6B6880", marginBottom: 6 }}>
             <span>{lang === "he" ? `ענית על ${answered} מתוך ${total - 1} שאלות` : `${answered} of ${total - 1} answered`}</span>
@@ -363,13 +259,11 @@ export default function Survey() {
           </div>
         </div>
 
-        {/* Questions */}
         {c.questions.map((q) => (
           <div key={q.id} style={{ background: "#fff", borderRadius: 16, padding: "24px 20px", marginBottom: 16, border: "1px solid #E8E5F0", boxShadow: "0 2px 10px rgba(0,0,0,0.04)" }}>
             <div style={{ fontSize: 12, fontWeight: 700, color: "#E8637A", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 6 }}>{q.label}</div>
             <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 16, lineHeight: 1.4 }}>{q.text}</div>
 
-            {/* Radio */}
             {q.type === "radio" && (
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {q.options.map(opt => {
@@ -396,7 +290,6 @@ export default function Survey() {
               </div>
             )}
 
-            {/* Checkbox */}
             {q.type === "checkbox" && (
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {q.options.map(opt => {
@@ -421,7 +314,6 @@ export default function Survey() {
                   );
                 })}
 
-                {/* Other option with reveal */}
                 {q.otherOption && (() => {
                   const otherKey = `${q.id}_other`;
                   const sel = (answers[q.id] || []).includes(q.otherOption);
@@ -453,8 +345,7 @@ export default function Survey() {
                           style={{
                             width: "100%", padding: "12px 14px", borderRadius: 12, fontSize: 14,
                             border: "2px solid #E8637A", background: "#fff",
-                            fontFamily: "inherit", direction: c.dir, outline: "none", color: "#1E1B2E",
-                            marginTop: -2
+                            fontFamily: "inherit", direction: c.dir, outline: "none", color: "#1E1B2E"
                           }}
                         />
                       )}
@@ -464,7 +355,6 @@ export default function Survey() {
               </div>
             )}
 
-            {/* Scale */}
             {q.type === "scale" && (
               <div>
                 <div style={{ display: "flex", gap: 8 }}>
@@ -488,24 +378,36 @@ export default function Survey() {
               </div>
             )}
 
-            {/* Text */}
             {q.type === "text" && (
-              <textarea
-                rows={4}
-                placeholder={q.placeholder}
-                value={answers[q.id] || ""}
-                onChange={e => handleText(q.id, e.target.value)}
-                style={{
-                  width: "100%", padding: "12px 14px", borderRadius: 12, fontSize: 14,
-                  border: "2px solid #E8E5F0", background: "#FAFAF8", resize: "vertical",
-                  fontFamily: "inherit", direction: c.dir, outline: "none", color: "#1E1B2E"
-                }}
-              />
+              q.id === "name" ? (
+                <input
+                  type="text"
+                  placeholder={q.placeholder}
+                  value={answers[q.id] || ""}
+                  onChange={e => handleText(q.id, e.target.value)}
+                  style={{
+                    width: "100%", padding: "12px 14px", borderRadius: 12, fontSize: 14,
+                    border: "2px solid #E8E5F0", background: "#FAFAF8",
+                    fontFamily: "inherit", direction: c.dir, outline: "none", color: "#1E1B2E"
+                  }}
+                />
+              ) : (
+                <textarea
+                  rows={4}
+                  placeholder={q.placeholder}
+                  value={answers[q.id] || ""}
+                  onChange={e => handleText(q.id, e.target.value)}
+                  style={{
+                    width: "100%", padding: "12px 14px", borderRadius: 12, fontSize: 14,
+                    border: "2px solid #E8E5F0", background: "#FAFAF8", resize: "vertical",
+                    fontFamily: "inherit", direction: c.dir, outline: "none", color: "#1E1B2E"
+                  }}
+                />
+              )
             )}
           </div>
         ))}
 
-        {/* Error message */}
         {submitError && (
           <div style={{
             background: "#FEE", border: "1px solid #E8637A",
@@ -516,7 +418,6 @@ export default function Survey() {
           </div>
         )}
 
-        {/* Submit */}
         <button
           onClick={handleSubmit}
           disabled={submitting}
