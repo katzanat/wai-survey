@@ -252,38 +252,6 @@ export default function Survey() {
           <span style={{ display: "inline-block", background: "#EDE8F8", color: "#7C5CBF", fontSize: 13, fontWeight: 600, padding: "4px 14px", borderRadius: 20 }}>{c.time}</span>
         </div>
 
-        <div style={{ background: "linear-gradient(135deg,#FDE8EC 0%,#EDE8F8 100%)", borderRadius: 18, padding: "24px 20px", marginBottom: 28, border: "1px solid #F2DDE3" }}>
-          <h2 style={{ fontSize: 18, fontWeight: 700, marginBottom: 6, color: "#1E1B2E" }}>{c.about_title}</h2>
-          <p style={{ fontSize: 14, color: "#6B6880", marginBottom: 16, lineHeight: 1.5 }}>{c.about_intro}</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 16 }}>
-            {c.pains.map((p, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 12, background: "rgba(255,255,255,0.7)", padding: "12px 14px", borderRadius: 12 }}>
-                <span style={{ fontSize: 20, flexShrink: 0, lineHeight: 1.2 }}>{p.icon}</span>
-                <span style={{ fontSize: 14, lineHeight: 1.5, color: "#1E1B2E", fontStyle: "italic" }}>{p.text}</span>
-              </div>
-            ))}
-          </div>
-          <p style={{ fontSize: 14, color: "#1E1B2E", lineHeight: 1.6, fontWeight: 500, margin: 0, paddingTop: 4 }}>{c.about_outro}</p>
-        </div>
-
-        <div style={{
-          background: "#fff", borderRadius: 16, padding: "20px 22px", marginBottom: 28,
-          border: "2px solid #E8637A", position: "relative",
-          boxShadow: "0 4px 20px rgba(232,99,122,0.12)"
-        }}>
-          <div style={{
-            position: "absolute", top: -10,
-            [c.dir === "rtl" ? "right" : "left"]: 20,
-            background: "#fff", padding: "0 10px",
-            color: "#E8637A", fontSize: 11, fontWeight: 700, letterSpacing: 1
-          }}>
-            {lang === "he" ? "החזון" : "THE VISION"}
-          </div>
-          <p style={{ fontSize: 16, lineHeight: 1.6, fontWeight: 600, margin: 0, color: "#1E1B2E", textAlign: "center" }}>
-            {c.aspiration}
-          </p>
-        </div>
-
         <div style={{ marginBottom: 28 }}>
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: "#6B6880", marginBottom: 6 }}>
             <span>{lang === "he" ? `ענית על ${answered} מתוך ${total - 1} שאלות` : `${answered} of ${total - 1} answered`}</span>
