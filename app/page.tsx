@@ -74,11 +74,11 @@ const content = {
 };
 
 export default function Survey() {
-  const [lang, setLang] = useState("he");
-  const [answers, setAnswers] = useState({});
+  const [lang, setLang] = useState<"he" | "en">("he");
+  const [answers, setAnswers] = useState<Record<string, string | string[] | number>>({});
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxoUV0VErcW0UTqz7cxohajaPmg6HBVp1kvkk7I7DakZ87M5783ioL-jlfjQxjpbuAgPQ/exec";
 
@@ -95,22 +95,22 @@ export default function Survey() {
 
   const pct = Math.round((answered / (total - 1)) * 100);
 
-  function handleRadio(id, val) {
+  function handleRadio(id: string, val: string) {
     setAnswers(prev => ({ ...prev, [id]: val }));
   }
 
-  function handleCheckbox(id, val) {
+  function handleCheckbox(id: string, val: string) {
     setAnswers(prev => {
-      const cur = prev[id] || [];
+      const cur = (prev[id] as string[]) || [];
       return { ...prev, [id]: cur.includes(val) ? cur.filter(v => v !== val) : [...cur, val] };
     });
   }
 
-  function handleScale(id, val) {
+  function handleScale(id: string, val: number) {
     setAnswers(prev => ({ ...prev, [id]: val }));
   }
 
-  function handleText(id, val) {
+  function handleText(id: string, val: string) {
     setAnswers(prev => ({ ...prev, [id]: val }));
   }
 
@@ -118,7 +118,7 @@ export default function Survey() {
     if (submitting) return;
     setSubmitError(null);
 
-    if (!answers.name || !answers.name.trim()) {
+    if (!answers.name || !(answers.name as string).trim()) {
       setSubmitError(lang === "he" ? "אנא מלאי את שמך 😊" : "Please enter your name 😊");
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
@@ -126,12 +126,13 @@ export default function Survey() {
 
     setSubmitting(true);
     try {
-      const payload = { ...answers, lang };
+      const payload: Record<string, string | string[] | number> = { ...answers, lang };
       c.questions.forEach(q => {
         if (q.otherOption && Array.isArray(payload[q.id])) {
-          const otherText = payload[`${q.id}_other`];
-          if (payload[q.id].includes(q.otherOption) && otherText) {
-            payload[q.id] = payload[q.id].map(v =>
+          const arr = payload[q.id] as string[];
+          const otherText = payload[`${q.id}_other`] as string;
+          if (arr.includes(q.otherOption) && otherText) {
+            payload[q.id] = arr.map(v =>
               v === q.otherOption ? `${q.otherOption}: ${otherText}` : v
             );
           }
@@ -165,11 +166,11 @@ export default function Survey() {
   }
 
   return (
-    <div style={{ direction: c.dir, minHeight: "100vh", background: "#FAFAF8", fontFamily: "Segoe UI, Arial, sans-serif", color: "#1E1B2E", padding: "24px 16px 60px" }}>
+    <div style={{ direction: c.dir as "ltr" | "rtl", minHeight: "100vh", background: "#FAFAF8", fontFamily: "Segoe UI, Arial, sans-serif", color: "#1E1B2E", padding: "24px 16px 60px" }}>
       <div style={{ maxWidth: 580, margin: "0 auto" }}>
 
         <div style={{ display: "flex", justifyContent: "center", gap: 8, marginBottom: 28 }}>
-          {["he", "en"].map(l => (
+          {(["he", "en"] as const).map(l => (
             <button key={l} onClick={() => setLang(l)} style={{
               padding: "8px 22px", borderRadius: 20, border: "2px solid",
               borderColor: lang === l ? "#E8637A" : "#E8E5F0",
@@ -266,7 +267,7 @@ export default function Survey() {
 
             {q.type === "radio" && (
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                {q.options.map(opt => {
+                {(q.options ?? []).map(opt => {
                   const sel = answers[q.id] === opt;
                   return (
                     <div key={opt} onClick={() => handleRadio(q.id, opt)} style={{
@@ -292,8 +293,8 @@ export default function Survey() {
 
             {q.type === "checkbox" && (
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                {q.options.map(opt => {
-                  const sel = (answers[q.id] || []).includes(opt);
+                {(q.options ?? []).map(opt => {
+                  const sel = (answers[q.id] as string[] || []).includes(opt);
                   return (
                     <div key={opt} onClick={() => handleCheckbox(q.id, opt)} style={{
                       display: "flex", alignItems: "center", gap: 12,
@@ -316,10 +317,10 @@ export default function Survey() {
 
                 {q.otherOption && (() => {
                   const otherKey = `${q.id}_other`;
-                  const sel = (answers[q.id] || []).includes(q.otherOption);
+                  const sel = (answers[q.id] as string[] || []).includes(q.otherOption as string);
                   return (
                     <>
-                      <div onClick={() => handleCheckbox(q.id, q.otherOption)} style={{
+                      <div onClick={() => handleCheckbox(q.id, q.otherOption as string)} style={{
                         display: "flex", alignItems: "center", gap: 12,
                         padding: "12px 16px", borderRadius: 12, cursor: "pointer",
                         border: `2px solid ${sel ? "#E8637A" : "#E8E5F0"}`,
@@ -333,19 +334,19 @@ export default function Survey() {
                         }}>
                           {sel && <span style={{ color: "#fff", fontSize: 11, fontWeight: 700 }}>✓</span>}
                         </div>
-                        <span style={{ fontSize: 14, lineHeight: 1.4 }}>{q.otherOption}</span>
+                        <span style={{ fontSize: 14, lineHeight: 1.4 }}>{q.otherOption as string}</span>
                       </div>
                       {sel && (
                         <input
                           type="text"
-                          value={answers[otherKey] || ""}
+                          value={(answers[otherKey] as string) || ""}
                           onChange={e => handleText(otherKey, e.target.value)}
                           placeholder={lang === "he" ? "ספרי לי איזה נושא..." : "Tell me what topic..."}
                           autoFocus
                           style={{
                             width: "100%", padding: "12px 14px", borderRadius: 12, fontSize: 14,
                             border: "2px solid #E8637A", background: "#fff",
-                            fontFamily: "inherit", direction: c.dir, outline: "none", color: "#1E1B2E"
+                            fontFamily: "inherit", direction: c.dir as "ltr" | "rtl", outline: "none", color: "#1E1B2E"
                           }}
                         />
                       )}
@@ -388,7 +389,7 @@ export default function Survey() {
                   style={{
                     width: "100%", padding: "12px 14px", borderRadius: 12, fontSize: 14,
                     border: "2px solid #E8E5F0", background: "#FAFAF8",
-                    fontFamily: "inherit", direction: c.dir, outline: "none", color: "#1E1B2E"
+                    fontFamily: "inherit", direction: c.dir as "ltr" | "rtl", outline: "none", color: "#1E1B2E"
                   }}
                 />
               ) : (
@@ -400,7 +401,7 @@ export default function Survey() {
                   style={{
                     width: "100%", padding: "12px 14px", borderRadius: 12, fontSize: 14,
                     border: "2px solid #E8E5F0", background: "#FAFAF8", resize: "vertical",
-                    fontFamily: "inherit", direction: c.dir, outline: "none", color: "#1E1B2E"
+                    fontFamily: "inherit", direction: c.dir as "ltr" | "rtl", outline: "none", color: "#1E1B2E"
                   }}
                 />
               )
