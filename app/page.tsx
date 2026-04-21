@@ -37,11 +37,12 @@ const content = {
       { id: "familiarity", label: "שאלה 4", type: "radio", text: "כמה את מכירה כלי AI כמו ChatGPT?", options: ["מעולם לא השתמשתי", "ניסיתי פעם-פעמיים אבל לא הבנתי", "משתמשת לפעמים, לא בטוחה שנכון", "משתמשת באופן קבוע"] },
       { id: "pain", label: "שאלה 5", type: "checkbox", text: "מה הכי מאתגר אותך ביומיום? (אפשר כמה)", options: ["אין לי מספיק זמן לעצמי", "יותר מדי ניירת — מכתבים, טפסים", "כתיבת תוכן / פוסטים לוקחת המון זמן", "תכנון (ארוחות, לוח זמנים, חופשות)", "קשה לי לחזור לעבודה / לפתח קריירה", "קשה למצוא מידע מהיר ואמין"] },
       { id: "topics", label: "שאלה 6", type: "checkbox", text: "אילו נושאים היית רוצה ללמוד? (אפשר כמה)", options: ["מה זה AI ואיך זה עובד", "איך לשאול AI נכון (פרומפטינג)", "AI לחיי יומיום (תכנון, בית ספר)", "AI לקריירה (CV, ראיון, כתיבה)", "יצירת תוכן (סושיאל, מצגות)", "AI לעסק קטן / פרילנס"], otherOption: "אחר (כתבי בעצמך)" },
-      { id: "format", label: "שאלה 7", type: "checkbox", text: "מה הפורמט שהכי נוח לך? (אפשר כמה)", options: ["מפגשים פנים אל פנים", "מפגשים חיים אונליין (Zoom)", "סרטונים מוקלטים — מתי שנוח לי", "שילוב — מפגשים חיים + סרטונים", "קבוצת WhatsApp עם למידה שוטפת"] },
+      { id: "format", label: "שאלה 7", type: "checkbox", text: "איך הכי נוח לך ללמוד? (אפשר כמה)", options: ["מפגשים פנים אל פנים", "מפגשים חיים אונליין (Zoom)", "סרטונים מוקלטים — מתי שנוח לי", "שילוב — מפגשים חיים + סרטונים", "קבוצת WhatsApp עם למידה שוטפת"] },
       { id: "timing", label: "שאלה 8", type: "checkbox", text: "מתי נוח לך ללמוד?", options: ["בוקר (9–12)", "אחה״צ (12–16)", "ערב (20–22)", "סוף שבוע"] },
-      { id: "price", label: "שאלה 9", type: "radio", text: "כמה תהיי מוכנה לשלם על סדנת AI למתחילות", options: ["עד $100", "$100–$150", "$150–$200", "יותר מ-$200 אם שווה את זה"] },
-      { id: "likely", label: "שאלה 10", type: "scale", text: "כמה סביר שתצטרפי לסדנה כזו?", low: "ממש לא סביר", high: "בטוח שכן!" },
-      { id: "open", label: "שאלה 11", type: "text", text: "יש משהו שחשוב לך שאדע? (רשות)", placeholder: "כתבי כאן..." }
+      { id: "duration", label: "שאלה 9", type: "radio", text: "מה היה מרגיש לך הכי נכון?", options: ["סדנה חד-פעמית (2–3 שעות)", "סדרה קצרה (3 מפגשים של כ-1.5 שעות)", "סדרה ארוכה יותר (5–6 מפגשים של כ-1.5 שעות)", "סרטונים מוקלטים, בקצב שלי", "עדיין לא בטוחה — עזרי לי להחליט"] },
+      { id: "price", label: "שאלה 10", type: "radio", text: "היית משקיעה בסדנה כזו?", options: ["כן, בטוח", "כן, תלוי בפורמט ובמחיר", "אולי", "רק אם זה בחינם"] },
+      { id: "likely", label: "שאלה 11", type: "scale", text: "כמה סביר שתצטרפי לסדנה כזו?", low: "ממש לא סביר", high: "בטוח שכן!" },
+      { id: "open", label: "שאלה 12", type: "text", text: "יש משהו שחשוב לך שאדע? (רשות)", placeholder: "כתבי כאן..." }
     ]
   },
   en: {
@@ -78,11 +79,12 @@ const content = {
       { id: "familiarity", label: "Question 4", type: "radio", text: "How familiar are you with AI tools like ChatGPT?", options: ["Never used them", "Tried once or twice but didn't get it", "Use sometimes, not sure I'm doing it right", "Use regularly"] },
       { id: "pain", label: "Question 5", type: "checkbox", text: "What frustrates you most daily? (select all that apply)", options: ["Not enough time for myself", "Too much admin — letters, forms, paperwork", "Writing content/posts takes too long", "Planning (meals, schedules, vacations)", "Hard to get back to work / develop career", "Hard to find quick, reliable info"] },
       { id: "topics", label: "Question 6", type: "checkbox", text: "Which topics would you like to learn? (select all that apply)", options: ["What AI is and how it works", "How to prompt AI effectively", "AI for daily life (planning, school)", "AI for career (resume, interviews)", "Content creation (social, presentations)", "AI for small business / freelancing"], otherOption: "Other (tell me)" },
-      { id: "format", label: "Question 7", type: "checkbox", text: "What's your preferred format? (select all that apply)", options: ["In-person meetings", "Live online sessions (Zoom)", "Recorded videos — watch anytime", "Hybrid — live + recordings", "WhatsApp group with ongoing learning"] },
+      { id: "format", label: "Question 7", type: "checkbox", text: "How do you prefer to learn? (select all that apply)", options: ["In-person meetings", "Live online sessions (Zoom)", "Recorded videos — watch anytime", "Hybrid — live + recordings", "WhatsApp group with ongoing learning"] },
       { id: "timing", label: "Question 8", type: "checkbox", text: "When is it most convenient to learn?", options: ["Morning (9am–12pm)", "Afternoon (12–4pm)", "Evening (8–10pm)", "Weekend"] },
-      { id: "price", label: "Question 9", type: "radio", text: "How much would you pay for a 6-session workshop?", options: ["Under $100", "$100–$150", "$150–$200", "More than $200 if worth it"] },
-      { id: "likely", label: "Question 10", type: "scale", text: "How likely are you to join such a workshop?", low: "Not likely at all", high: "Definitely yes!" },
-      { id: "open", label: "Question 11", type: "text", text: "Anything else you want me to know? (optional)", placeholder: "Write here..." }
+      { id: "duration", label: "Question 9", type: "radio", text: "What would feel right for you?", options: ["A one-time workshop (2–3 hours)", "A short series (3 meetings of ~1.5 hours)", "A longer series (5–6 meetings of ~1.5 hours)", "Self-paced recorded videos", "Still not sure — help me decide"] },
+      { id: "price", label: "Question 10", type: "radio", text: "Would you invest in a workshop like this?", options: ["Yes, definitely", "Yes, depending on the format and price", "Maybe", "Only if it's free"] },
+      { id: "likely", label: "Question 11", type: "scale", text: "How likely are you to join such a workshop?", low: "Not likely at all", high: "Definitely yes!" },
+      { id: "open", label: "Question 12", type: "text", text: "Anything else you want me to know? (optional)", placeholder: "Write here..." }
     ]
   }
 };

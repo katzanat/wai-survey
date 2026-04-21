@@ -36,7 +36,7 @@ Uses `mode: "no-cors"` — standard Apps Script pattern, can't read response but
 
 \## Google Sheet columns (in order)
 
-Timestamp | Name | Who | Age | Familiarity | Tools Used | Pain Points | Topics | Format | Timing | Price | Likelihood | Open Feedback | Language
+Timestamp | Name | Who | Age | Familiarity | Tools Used | Pain Points | Topics | Delivery | Timing | Duration | Willingness | Likelihood | Open Feedback | Language
 
 
 
