@@ -218,35 +218,6 @@ export default function Survey() {
         </div>
 
         <div style={{ textAlign: "center", marginBottom: 24 }}>
-          <div
-            onClick={e => {
-              const el = e.currentTarget;
-              el.dataset.pos = el.dataset.pos === "right" ? "left" : "right";
-              el.style.backgroundPosition = el.dataset.pos === "right" ? "right center" : "left center";
-            }}
-            onMouseEnter={e => {
-              const el = e.currentTarget;
-              if (el.dataset.pos !== "right") el.style.backgroundPosition = "right center";
-            }}
-            onMouseLeave={e => {
-              const el = e.currentTarget;
-              if (el.dataset.pos !== "right") el.style.backgroundPosition = "left center";
-            }}
-            data-pos="left"
-            style={{
-              width: "100%", maxWidth: 480, margin: "0 auto 20px",
-              borderRadius: 20, overflow: "hidden",
-              boxShadow: "0 20px 50px rgba(30,27,46,0.15)",
-              aspectRatio: "16/15.47", position: "relative",
-              backgroundImage: "url('https://raw.githubusercontent.com/katzanat/wai/main/hero_survey.png')",
-              backgroundSize: "200% auto",
-              backgroundPosition: "left center",
-              backgroundRepeat: "no-repeat",
-              backgroundColor: "#EDE8F8",
-              transition: "background-position 1.2s ease-in-out",
-              cursor: "pointer"
-            }}
-          />
           <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 10, lineHeight: 1.3 }}>{c.title}</h1>
           <p style={{ fontSize: 14, color: "#6B6880", lineHeight: 1.7, maxWidth: 460, margin: "0 auto 12px" }}>{c.desc}</p>
           <span style={{ display: "inline-block", background: "#EDE8F8", color: "#7C5CBF", fontSize: 13, fontWeight: 600, padding: "4px 14px", borderRadius: 20 }}>{c.time}</span>
