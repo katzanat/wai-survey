@@ -206,15 +206,6 @@ export default function Survey() {
           ))}
         </div>
 
-        {/* Hero image */}
-        <div style={{ borderRadius: 20, overflow: "hidden", marginBottom: 28 }}>
-          <img
-            src="https://raw.githubusercontent.com/katzanat/wai/main/hero_survey.png"
-            alt=""
-            style={{ width: "100%", display: "block" }}
-          />
-        </div>
-
         {/* Personal intro */}
         <div style={{ marginBottom: 20 }}>
           <p style={{
@@ -229,22 +220,6 @@ export default function Survey() {
         {/* Time pill */}
         <div style={{ textAlign: "center", marginBottom: 28 }}>
           <span style={{ display: "inline-block", background: "#EDE8F8", color: "#7C5CBF", fontSize: 13, fontWeight: 600, padding: "4px 14px", borderRadius: 20 }}>{c.time}</span>
-        </div>
-
-        {/* Pain points section */}
-        <div style={{ background: "#fff", borderRadius: 20, padding: "24px 20px", marginBottom: 28, border: "1px solid #E8E5F0", boxShadow: "0 2px 10px rgba(0,0,0,0.04)" }}>
-          <h2 style={{ fontSize: 18, fontWeight: 700, marginBottom: 6, color: "#1E1B2E" }}>{c.about_title}</h2>
-          <p style={{ fontSize: 14, color: "#6B6880", marginBottom: 16 }}>{c.about_intro}</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {c.pains.map((p, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
-                <span style={{ fontSize: 18, flexShrink: 0 }}>{p.icon}</span>
-                <span style={{ fontSize: 14, lineHeight: 1.6, color: "#3D3A52" }}>{p.text}</span>
-              </div>
-            ))}
-          </div>
-          <p style={{ fontSize: 14, color: "#6B6880", marginTop: 16, marginBottom: 12, lineHeight: 1.6 }}>{c.about_outro}</p>
-          <p style={{ fontSize: 14, fontWeight: 600, color: "#E8637A", margin: 0 }}>{c.aspiration}</p>
         </div>
 
         {/* Progress bar */}
