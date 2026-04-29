@@ -5,14 +5,12 @@ import { useState, Fragment } from "react";
 const content = {
   he: {
     dir: "rtl",
-    title: "סדנת AI לנשים",
-    desc: "אני בונה סדנת AI לנשים - פרקטית, בעברית, ללא צורך בידע טכני. אני אשמח אם תוכלי לענות לי על כמה שאלות זה יעזור לי לבנות משהו שבאמת מועיל",
-    time: "⏱ 3 דקות בלבד",
+    intro: `היי, אני ענת.\n\n15 שנה בונה מוצרים. עברתי יבשות, פתחתי עסקים, \nגידלתי שלושה ילדים. \nכל פעם בניתי דברים שעוזרים לאנשים.\n\nועכשיו אני רואה דבר אחד שאני לא יכולה לעזוב:\nנשים שאני מכירה, חכמות, מוכשרות, רצות בלי סוף — \nפותחות את ChatGPT פעם, מקבלות תשובה גנרית, ומתייאשות.\n\nזה לא הן. זה הכלי.\n\nאני בונה סדנה שבה לומדות להשתמש ב-AI \nבדרך שמתאימה לנו — לחיים שלנו, לקצב שלנו, לשפה שלנו.\nבלי מונחים טכניים. בלי להרגיש טיפשות. בלי להתחרות באף אחד.\n\nלפני שאני מתחילה — אני רוצה לשמוע ממך.\n4 דקות. שלוש-עשרה שאלות.\n\nמוכנה?`,
+    time: "⏱ 4 דקות בלבד",
     about_title: "זה מרגיש לך מוכר? 💭",
     about_intro: "אם את מזדהה עם אחד מאלה — הסדנה הזו בשבילך:",
     pains: [
       { icon: "😅", text: "\"כולם מדברים על AI ואני מרגישה שאני נשארת מאחור\"" },
-      { icon: "🤔", text: "\"ניסיתי את ChatGPT פעם, קיבלתי תשובה גנרית, והתייאשתי\"" },
       { icon: "⏰", text: "\"אין לי זמן לשבת על טוטוריאלים באנגלית עם מונחים טכניים\"" },
       { icon: "📝", text: "\"אני טובעת במשימות קטנות — מיילים, טפסים, תכנון, הודעות\"" },
       { icon: "💼", text: "\"אני רוצה לחזור לעבודה / לפתח קריירה ולא יודעת מאיפה להתחיל\"" },
@@ -35,26 +33,25 @@ const content = {
       { id: "who", label: "שאלה 2", type: "radio", text: "מי את?", options: ["אמא בבית (Stay-at-home mom)", "עצמאית / פרילנסרית", "שכירה", "אחר"] },
       { id: "age", label: "שאלה 3", type: "radio", text: "בת כמה את?", options: ["25–34", "35–44", "45–54", "55+"] },
       { id: "familiarity", label: "שאלה 4", type: "radio", text: "כמה את מכירה כלי AI כמו ChatGPT?", options: ["מעולם לא השתמשתי", "ניסיתי פעם-פעמיים אבל לא הבנתי", "משתמשת לפעמים, לא בטוחה שנכון", "משתמשת באופן קבוע"] },
-      { id: "pain", label: "שאלה 5", type: "checkbox", text: "מה הכי מאתגר אותך ביומיום? (אפשר כמה)", options: ["אין לי מספיק זמן לעצמי", "יותר מדי ניירת — מכתבים, טפסים", "כתיבת תוכן / פוסטים לוקחת המון זמן", "תכנון (ארוחות, לוח זמנים, חופשות)", "קשה לי לחזור לעבודה / לפתח קריירה", "קשה למצוא מידע מהיר ואמין"] },
-      { id: "topics", label: "שאלה 6", type: "checkbox", text: "אילו נושאים היית רוצה ללמוד? (אפשר כמה)", options: ["מה זה AI ואיך זה עובד", "איך לשאול AI נכון (פרומפטינג)", "AI לחיי יומיום (תכנון, בית ספר)", "AI לקריירה (CV, ראיון, כתיבה)", "יצירת תוכן (סושיאל, מצגות)", "AI לעסק קטן / פרילנס"], otherOption: "אחר (כתבי בעצמך)" },
-      { id: "format", label: "שאלה 7", type: "checkbox", text: "איך הכי נוח לך ללמוד? (אפשר כמה)", options: ["מפגשים פנים אל פנים", "מפגשים חיים אונליין (Zoom)", "סרטונים מוקלטים — מתי שנוח לי", "שילוב — מפגשים חיים + סרטונים", "קבוצת WhatsApp עם למידה שוטפת"] },
-      { id: "timing", label: "שאלה 8", type: "checkbox", text: "מתי נוח לך ללמוד?", options: ["בוקר (9–12)", "אחה״צ (12–16)", "ערב (20–22)", "סוף שבוע"] },
-      { id: "duration", label: "שאלה 9", type: "radio", text: "מה היה מרגיש לך הכי נכון?", options: ["סדנה חד-פעמית (2–3 שעות)", "סדרה קצרה (3 מפגשים של כ-1.5 שעות)", "סדרה ארוכה יותר (5–6 מפגשים של כ-1.5 שעות)", "סרטונים מוקלטים, בקצב שלי", "עדיין לא בטוחה — עזרי לי להחליט"] },
-      { id: "price", label: "שאלה 10", type: "radio", text: "היית משקיעה בסדנה כזו?", options: ["כן, בטוח", "כן, תלוי בפורמט ובמחיר", "אולי", "רק אם זה בחינם"] },
-      { id: "likely", label: "שאלה 11", type: "scale", text: "כמה סביר שתצטרפי לסדנה כזו?", low: "ממש לא סביר", high: "בטוח שכן!" },
-      { id: "open", label: "שאלה 12", type: "text", text: "יש משהו שחשוב לך שאדע? (רשות)", placeholder: "כתבי כאן..." }
+      { id: "pain", label: "שאלה 5", type: "radio", text: "מה הכי מאתגר אותך ביומיום?", options: ["אין לי מספיק זמן לעצמי", "יותר מדי ניירת — מכתבים, טפסים", "כתיבת תוכן / פוסטים לוקחת המון זמן", "תכנון (ארוחות, לוח זמנים, חופשות)", "קשה לי לחזור לעבודה / לפתח קריירה", "קשה למצוא מידע מהיר ואמין"] },
+      { id: "outcome", label: "שאלה 6", type: "text", text: "אחרי הסדנה, מה היית רוצה להיות מסוגלת לעשות?", placeholder: "כתבי בחופשיות... (זו השאלה הכי חשובה בשבילי 💫)" },
+      { id: "alternatives", label: "שאלה 7", type: "radio", text: "כשאת תקועה עם אחד מהדברים האלה היום — מה את בדרך כלל עושה?", options: ["מנסה להבין לבד", "שואלת חברה או בן משפחה", "משתמשת במקורות חינמיים ביוטיוב או גוגל", "משלמת למישהו שיעזור לי", "פשוט דוחה או מוותרת"] },
+      { id: "format", label: "שאלה 8", type: "radio", text: "אם היית צריכה לבחור — איזה פורמט הכי מתאים לך?", options: ["מפגשים פנים אל פנים", "מפגשים חיים אונליין (Zoom)", "סרטונים מוקלטים — מתי שנוח לי", "שילוב — מפגשים חיים + סרטונים", "קבוצת WhatsApp עם למידה שוטפת"] },
+      { id: "timing", label: "שאלה 9", type: "checkbox", text: "מתי נוח לך ללמוד?", options: ["בוקר (9–12)", "אחה״צ (12–16)", "ערב (20–22)", "סוף שבוע"] },
+      { id: "duration", label: "שאלה 10", type: "radio", text: "מה היה מרגיש לך הכי נכון?", options: ["סדנה חד-פעמית (2–3 שעות)", "סדרה קצרה (3 מפגשים של כ-1.5 שעות)", "סדרה ארוכה יותר (5–6 מפגשים של כ-1.5 שעות)", "סרטונים מוקלטים, בקצב שלי", "עדיין לא בטוחה — עזרי לי להחליט"] },
+      { id: "price", label: "שאלה 11", type: "radio", text: "היית משקיעה בסדנה כזו?", options: ["כן, בטוח", "כן, תלוי בפורמט ובמחיר", "אולי", "רק אם זה בחינם"] },
+      { id: "likely", label: "שאלה 12", type: "scale", text: "כמה סביר שתצטרפי לסדנה כזו?", low: "ממש לא סביר", high: "בטוח שכן!" },
+      { id: "open", label: "שאלה 13", type: "text", text: "יש משהו שחשוב לך שאדע? (רשות)", placeholder: "כתבי כאן..." }
     ]
   },
   en: {
     dir: "ltr",
-    title: "AI Workshop for Women",
-    desc: "I'm building a practical AI workshop for women — no technical background needed. 3 minutes of your time will help me build something truly useful ✨",
-    time: "⏱ Only 3 minutes",
+    intro: `Hi, I'm Anat.\n\n15 years building products. Crossed continents, \nstarted businesses, raised three kids. \nEvery time — I built things that help people.\n\nAnd now there's one thing I can't let go of:\nWomen I know — smart, capable, running without stop — \nopen ChatGPT once, get a generic answer, give up.\n\nIt's not them. It's the tool.\n\nI'm building a workshop where we learn to use AI \nthe way it fits us — our lives, our pace, our language.\nNo jargon. No feeling stupid. No competing with anyone.\n\nBefore I start — I want to hear from you.\n4 minutes. Thirteen questions.\n\nReady?`,
+    time: "⏱ Only 4 minutes",
     about_title: "Does this sound like you? 💭",
     about_intro: "If any of these feel familiar — this workshop is for you:",
     pains: [
       { icon: "😅", text: "\"Everyone's talking about AI and I feel like I'm falling behind\"" },
-      { icon: "🤔", text: "\"I tried ChatGPT once, got a generic answer, and gave up\"" },
       { icon: "⏰", text: "\"I don't have time for English tutorials full of technical jargon\"" },
       { icon: "📝", text: "\"I'm drowning in small tasks — emails, forms, planning, messages\"" },
       { icon: "💼", text: "\"I want to return to work / grow my career and don't know where to start\"" },
@@ -77,14 +74,15 @@ const content = {
       { id: "who", label: "Question 2", type: "radio", text: "Which best describes you?", options: ["Stay-at-home mom", "Freelancer / self-employed", "Employed outside the home", "Other"] },
       { id: "age", label: "Question 3", type: "radio", text: "How old are you?", options: ["25–34", "35–44", "45–54", "55+"] },
       { id: "familiarity", label: "Question 4", type: "radio", text: "How familiar are you with AI tools like ChatGPT?", options: ["Never used them", "Tried once or twice but didn't get it", "Use sometimes, not sure I'm doing it right", "Use regularly"] },
-      { id: "pain", label: "Question 5", type: "checkbox", text: "What frustrates you most daily? (select all that apply)", options: ["Not enough time for myself", "Too much admin — letters, forms, paperwork", "Writing content/posts takes too long", "Planning (meals, schedules, vacations)", "Hard to get back to work / develop career", "Hard to find quick, reliable info"] },
-      { id: "topics", label: "Question 6", type: "checkbox", text: "Which topics would you like to learn? (select all that apply)", options: ["What AI is and how it works", "How to prompt AI effectively", "AI for daily life (planning, school)", "AI for career (resume, interviews)", "Content creation (social, presentations)", "AI for small business / freelancing"], otherOption: "Other (tell me)" },
-      { id: "format", label: "Question 7", type: "checkbox", text: "How do you prefer to learn? (select all that apply)", options: ["In-person meetings", "Live online sessions (Zoom)", "Recorded videos — watch anytime", "Hybrid — live + recordings", "WhatsApp group with ongoing learning"] },
-      { id: "timing", label: "Question 8", type: "checkbox", text: "When is it most convenient to learn?", options: ["Morning (9am–12pm)", "Afternoon (12–4pm)", "Evening (8–10pm)", "Weekend"] },
-      { id: "duration", label: "Question 9", type: "radio", text: "What would feel right for you?", options: ["A one-time workshop (2–3 hours)", "A short series (3 meetings of ~1.5 hours)", "A longer series (5–6 meetings of ~1.5 hours)", "Self-paced recorded videos", "Still not sure — help me decide"] },
-      { id: "price", label: "Question 10", type: "radio", text: "Would you invest in a workshop like this?", options: ["Yes, definitely", "Yes, depending on the format and price", "Maybe", "Only if it's free"] },
-      { id: "likely", label: "Question 11", type: "scale", text: "How likely are you to join such a workshop?", low: "Not likely at all", high: "Definitely yes!" },
-      { id: "open", label: "Question 12", type: "text", text: "Anything else you want me to know? (optional)", placeholder: "Write here..." }
+      { id: "pain", label: "Question 5", type: "radio", text: "What is your biggest daily challenge?", options: ["Not enough time for myself", "Too much admin — letters, forms, paperwork", "Writing content/posts takes too long", "Planning (meals, schedules, vacations)", "Hard to get back to work / develop career", "Hard to find quick, reliable info"] },
+      { id: "outcome", label: "Question 6", type: "text", text: "After the workshop, what would you want to be able to do?", placeholder: "Write freely... (this is the most important question for me 💫)" },
+      { id: "alternatives", label: "Question 7", type: "radio", text: "When you feel stuck with these things today, what do you usually do?", options: ["Figure it out on my own", "Ask a friend or family member", "Use free online resources (YouTube, Google)", "Pay someone to help", "Honestly, give up or postpone it"] },
+      { id: "format", label: "Question 8", type: "radio", text: "If you had to pick one — which format fits you best?", options: ["In-person meetings", "Live online sessions (Zoom)", "Recorded videos — watch anytime", "Hybrid — live + recordings", "WhatsApp group with ongoing learning"] },
+      { id: "timing", label: "Question 9", type: "checkbox", text: "When is it most convenient to learn?", options: ["Morning (9am–12pm)", "Afternoon (12–4pm)", "Evening (8–10pm)", "Weekend"] },
+      { id: "duration", label: "Question 10", type: "radio", text: "What would feel right for you?", options: ["A one-time workshop (2–3 hours)", "A short series (3 meetings of ~1.5 hours)", "A longer series (5–6 meetings of ~1.5 hours)", "Self-paced recorded videos", "Still not sure — help me decide"] },
+      { id: "price", label: "Question 11", type: "radio", text: "Would you invest in a workshop like this?", options: ["Yes, definitely", "Yes, depending on the format and price", "Maybe", "Only if it's free"] },
+      { id: "likely", label: "Question 12", type: "scale", text: "How likely are you to join such a workshop?", low: "Not likely at all", high: "Definitely yes!" },
+      { id: "open", label: "Question 13", type: "text", text: "Anything else you want me to know? (optional)", placeholder: "Write here..." }
     ]
   }
 };
@@ -99,7 +97,7 @@ export default function Survey() {
   const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxoUV0VErcW0UTqz7cxohajaPmg6HBVp1kvkk7I7DakZ87M5783ioL-jlfjQxjpbuAgPQ/exec";
 
   const c = content[lang];
-  const total = c.questions.length;
+  const nonTextCount = c.questions.filter(q => q.type !== "text").length;
   const showTools = answers.familiarity === "משתמשת באופן קבוע" || answers.familiarity === "Use regularly";
 
   const answered = c.questions.filter(q => {
@@ -110,7 +108,7 @@ export default function Survey() {
     return true;
   }).length;
 
-  const pct = Math.round((answered / (total - 1)) * 100);
+  const pct = Math.round((answered / nonTextCount) * 100);
 
   function handleRadio(id: string, val: string) {
     setAnswers(prev => ({ ...prev, [id]: val }));
@@ -205,6 +203,7 @@ export default function Survey() {
     <div style={{ direction: c.dir as "ltr" | "rtl", minHeight: "100vh", background: "#FAFAF8", fontFamily: "Segoe UI, Arial, sans-serif", color: "#1E1B2E", padding: "24px 16px 60px" }}>
       <div style={{ maxWidth: 580, margin: "0 auto" }}>
 
+        {/* Language toggle */}
         <div style={{ display: "flex", justifyContent: "center", gap: 8, marginBottom: 28 }}>
           {(["he", "en"] as const).map(l => (
             <button key={l} onClick={() => setLang(l)} style={{
@@ -219,15 +218,51 @@ export default function Survey() {
           ))}
         </div>
 
-        <div style={{ textAlign: "center", marginBottom: 24 }}>
-          <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 10, lineHeight: 1.3 }}>{c.title}</h1>
-          <p style={{ fontSize: 14, color: "#6B6880", lineHeight: 1.7, maxWidth: 460, margin: "0 auto 12px" }}>{c.desc}</p>
+        {/* Hero image */}
+        <div style={{ borderRadius: 20, overflow: "hidden", marginBottom: 28 }}>
+          <img
+            src="https://raw.githubusercontent.com/katzanat/wai/main/hero_survey.png"
+            alt=""
+            style={{ width: "100%", display: "block" }}
+          />
+        </div>
+
+        {/* Personal intro */}
+        <div style={{ marginBottom: 20 }}>
+          <p style={{
+            fontSize: 16,
+            lineHeight: 1.85,
+            color: "#1E1B2E",
+            whiteSpace: "pre-line",
+            margin: 0
+          }}>{c.intro}</p>
+        </div>
+
+        {/* Time pill */}
+        <div style={{ textAlign: "center", marginBottom: 28 }}>
           <span style={{ display: "inline-block", background: "#EDE8F8", color: "#7C5CBF", fontSize: 13, fontWeight: 600, padding: "4px 14px", borderRadius: 20 }}>{c.time}</span>
         </div>
 
+        {/* Pain points section */}
+        <div style={{ background: "#fff", borderRadius: 20, padding: "24px 20px", marginBottom: 28, border: "1px solid #E8E5F0", boxShadow: "0 2px 10px rgba(0,0,0,0.04)" }}>
+          <h2 style={{ fontSize: 18, fontWeight: 700, marginBottom: 6, color: "#1E1B2E" }}>{c.about_title}</h2>
+          <p style={{ fontSize: 14, color: "#6B6880", marginBottom: 16 }}>{c.about_intro}</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {c.pains.map((p, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+                <span style={{ fontSize: 18, flexShrink: 0 }}>{p.icon}</span>
+                <span style={{ fontSize: 14, lineHeight: 1.6, color: "#3D3A52" }}>{p.text}</span>
+              </div>
+            ))}
+          </div>
+          <p style={{ fontSize: 14, color: "#6B6880", marginTop: 16, marginBottom: 12, lineHeight: 1.6 }}>{c.about_outro}</p>
+          <p style={{ fontSize: 14, fontWeight: 600, color: "#E8637A", margin: 0 }}>{c.aspiration}</p>
+        </div>
+
+        {/* Progress bar */}
         <div style={{ marginBottom: 28 }}>
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: "#6B6880", marginBottom: 6 }}>
-            <span>{lang === "he" ? `ענית על ${answered} מתוך ${total - 1} שאלות` : `${answered} of ${total - 1} answered`}</span>
+            <span>{lang === "he" ? `ענית על ${answered} מתוך ${nonTextCount} שאלות` : `${answered} of ${nonTextCount} answered`}</span>
             <span>{pct}%</span>
           </div>
           <div style={{ height: 6, background: "#E8E5F0", borderRadius: 6, overflow: "hidden" }}>
