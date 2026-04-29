@@ -142,18 +142,6 @@ export default function Survey() {
     setSubmitting(true);
     try {
       const payload: Record<string, string | string[] | number> = { ...answers, lang };
-      c.questions.forEach(q => {
-        if (q.otherOption && Array.isArray(payload[q.id])) {
-          const arr = payload[q.id] as string[];
-          const otherText = payload[`${q.id}_other`] as string;
-          if (arr.includes(q.otherOption) && otherText) {
-            payload[q.id] = arr.map(v =>
-              v === q.otherOption ? `${q.otherOption}: ${otherText}` : v
-            );
-          }
-          delete payload[`${q.id}_other`];
-        }
-      });
 
       // Handle tools "other" option
       if (Array.isArray(payload.tools) && (payload.tools as string[]).includes(c.tools.otherOption)) {
@@ -326,44 +314,6 @@ export default function Survey() {
                   );
                 })}
 
-                {q.otherOption && (() => {
-                  const otherKey = `${q.id}_other`;
-                  const sel = (answers[q.id] as string[] || []).includes(q.otherOption as string);
-                  return (
-                    <>
-                      <div onClick={() => handleCheckbox(q.id, q.otherOption as string)} style={{
-                        display: "flex", alignItems: "center", gap: 12,
-                        padding: "12px 16px", borderRadius: 12, cursor: "pointer",
-                        border: `2px solid ${sel ? "#E8637A" : "#E8E5F0"}`,
-                        background: sel ? "#FDE8EC" : "#FAFAF8",
-                        transition: "all 0.15s"
-                      }}>
-                        <div style={{
-                          width: 18, height: 18, borderRadius: 4, border: `2px solid ${sel ? "#E8637A" : "#ccc"}`,
-                          background: sel ? "#E8637A" : "#fff", flexShrink: 0,
-                          display: "flex", alignItems: "center", justifyContent: "center"
-                        }}>
-                          {sel && <span style={{ color: "#fff", fontSize: 11, fontWeight: 700 }}>✓</span>}
-                        </div>
-                        <span style={{ fontSize: 14, lineHeight: 1.4 }}>{q.otherOption as string}</span>
-                      </div>
-                      {sel && (
-                        <input
-                          type="text"
-                          value={(answers[otherKey] as string) || ""}
-                          onChange={e => handleText(otherKey, e.target.value)}
-                          placeholder={lang === "he" ? "ספרי לי איזה נושא..." : "Tell me what topic..."}
-                          autoFocus
-                          style={{
-                            width: "100%", padding: "12px 14px", borderRadius: 12, fontSize: 14,
-                            border: "2px solid #E8637A", background: "#fff",
-                            fontFamily: "inherit", direction: c.dir as "ltr" | "rtl", outline: "none", color: "#1E1B2E"
-                          }}
-                        />
-                      )}
-                    </>
-                  );
-                })()}
               </div>
             )}
 
